@@ -1,0 +1,17 @@
+    <form class="form-horizontal" style="margin-top:20px;background:#fff;padding:20px 10px;">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6" data-ng-repeat="(key,item) in config">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">{{item.desc}}：</label>
+                        <div class="col-md-8">
+                            <input type="text" id="{{key}}" class="form-control info" value="{{item.value}}"
+                                   data-ng-blur="updateConfig(key,item.value)" ng-readonly="item.editable==0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+

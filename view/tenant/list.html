@@ -1,0 +1,83 @@
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <!--search-->
+                <div class="layui-form layui-card-header" style="padding:15px 0;height: auto">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">租户编号</label>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" ng-model="searchEntity.id">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">租户名</label>
+                            <div class="layui-input-block">
+                                <input type="text" class='layui-input' ng-model="searchEntity.name">
+                            </div>
+                        </div>
+                        <!--<div class="layui-inline">-->
+                            <!--<label class="layui-form-label">订单状态</label>-->
+                            <!--<div class="layui-input-block">-->
+                                <!--<select lay-ignore ng-model="orderSearchEntity.state" ui-select2="selectOptions" class="form-control" style="width: 200px">-->
+                                    <!--<option  data-ng-repeat="item in orderState" value="{{item.value}}">{{item.text}}</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="layui-inline">-->
+                            <!--<label class="layui-form-label">开始时间</label>-->
+                            <!--<div class="layui-input-block">-->
+                                <!--<input type="text" class="layui-input" data-ng-model="start" id="start"  laydate laydate-type="datetime">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="layui-inline">-->
+                            <!--<label class="layui-form-label">结束时间</label>-->
+                            <!--<div class="layui-input-block">-->
+                                <!--<input type="text" class="layui-input" data-ng-model="end" id="end"  laydate laydate-type="datetime">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="layui-inline">
+                            <button class="layui-btn" ng-click="search()"><i class="layui-icon layui-icon-search"></i></button>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn" ng-click="refresh()"><i class="layui-icon layui-icon-refresh"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div style="padding-bottom: 10px">
+                        <button class="layui-btn" data-type="add" data-ng-click="add()">添加</button>
+                    </div>
+                    <table class="layui-table" lay-skin="line">
+                        <thead>
+                        <tr>
+                            <th>租户编号</th>
+                            <th>租户名</th>
+                            <th>租户实体编号</th>
+                            <th>租户类型</th>
+                            <!--<th>操作</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in list">
+                            <td>{{item.id}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.tid}}</td>
+                            <td>{{item.type}}</td>
+                            <!--<td>-->
+                                <!--<a class="layui-btn layui-btn-normal layui-btn-xs" data-ng-click="edit(item)">-->
+                                    <!--<i class="layui-icon layui-icon-edit"></i>编辑</a>-->
+                                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" data-ng-click="delete(item)">-->
+                                    <!--<i class="layui-icon layui-icon-delete"></i>删除</a>-->
+                            <!--</td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div id="page"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,71 @@
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <!--search-->
+                <div class="layui-form layui-card-header" style="padding:15px 0;height: auto">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">编号</label>
+                            <div class="layui-input-block">
+                                <input type="text" class="layui-input" placeholder="作业人员编号" ng-model="searchEntity.operatorId">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">资质编号</label>
+                            <div class="layui-input-block">
+                                <input type="text" class='layui-input' placeholder="资质编号" ng-model="searchEntity.id">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn" ng-click="search()"><i class="layui-icon layui-icon-search"></i></button>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn" ng-click="refresh()"><i class="layui-icon layui-icon-refresh"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <!--<div style="padding-bottom: 10px">-->
+                    <!--<button class="layui-btn" data-type="add" data-ng-click="add()">添加</button>-->
+                    <!--</div>-->
+                    <table class="layui-table" lay-skin="line">
+                        <thead>
+                        <tr>
+                            <th>资质编号</th>
+                            <th>作业种类</th>
+                            <th>作业级别</th>
+                            <th>批准项目明细</th>
+                            <th>持证状态</th>
+                            <th>学号(证书编号)</th>
+                            <th>资质类型</th>
+                            <th>有效日期</th>
+                            <th>作业人员编号</th>
+                            <th>考核机构</th>
+                            <th>发证机构</th>
+                            <th>批准日期</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in list">
+                            <td>{{item.id}}</td>
+                            <td>{{item.type}}</td>
+                            <td>{{item.level}}</td>
+                            <td>{{item.items}}</td>
+                            <td>{{item.state}}</td>
+                            <td>{{item.certno}}</td>
+                            <td>{{item.category}}</td>
+                            <td>{{item.expireTime}}</td>
+                            <td>{{item.operatorId}}</td>
+                            <td>{{item.examAgency}}</td>
+                            <td>{{item.issueAgency}}</td>
+                            <td>{{item.approvalTime}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div id="page"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

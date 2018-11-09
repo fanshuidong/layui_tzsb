@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>后台登录</title>
+		<link rel="stylesheet" type="text/css" href="static/admin/layui/css/layui.css" />
+		<link rel="stylesheet" type="text/css" href="static/admin/css/login.css" />
+	</head>
+	<body>
+	<div class="m-login-bg">
+		<div class="m-login">
+			<h3>后台系统登录</h3>
+			<div class="m-login-warp">
+				<form class="layui-form">
+					<div class="layui-form-item">
+						<input type="text" name="uname" lay-verify="required|username" placeholder="用户名" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-form-item">
+						<input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">环境选择</label>
+						<div class="layui-input-block">
+							<select name="apiUrl" lay-verify="required">
+								<option value="zxlUrl">张辛林本地</option>
+								<option value="fsdUrl">樊水东本地</option>
+								<option value="online">线上服务器</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item m-login-btn">
+						<div class="layui-inline">
+							<button class="layui-btn layui-btn-normal" lay-submit lay-filter="login">登录</button>
+						</div>
+						<div class="layui-inline">
+							<button type="reset" class="layui-btn layui-btn-primary">取消</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<p class="copyright">杭州玄奇网络科技有限公司</p>
+		</div>
+	</div>
+		<script src="static/admin/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+            layui.use(['form', 'layer','jquery'], function() {
+                var form = layui.form,
+                    $ = jQuery = layui.$;
+                    layer = layui.layer;
+                //自定义验证规则
+                form.verify({
+                    username: function(value) {
+                        if(value.length < 5) {
+                            return '标题至少得5个字符啊';
+                        }
+                    },
+                    password: [/(.+){6,12}$/, '密码必须6到12位']
+                });
+                //监听提交
+                form.on('submit(login)', function(data) {
+                    data.field.os = "WINDOWS";
+                    data.field.client = "BROWSER";
+                    data.field.device = "COMPUTER";
+                    var url = Url[data.field.apiUrl];
+                    $.ajax({
+                        type:'post',
+                        contentType:"application/json",
+                        url: url+'eep/user/login',
+                        data: JSON.stringify(data.field),
+                        success: function(response) {
+                            if (response.code === "code.ok") {
+                                window.localStorage.setItem("t_token", response.attach.token);
+                                window.localStorage.setItem("t_userName", response.attach.user.nickname);
+                                window.localStorage.setItem("t_uid", response.attach.user.id);
+                                window.localStorage.setItem("t_apiUrl", data.field.apiUrl);
+                                window.location.href = "index.html";
+                            } else {
+                                layer.alert(response.code);
+                            }
+                        }
+                    });
+                    return false;
+                });
+
+                var Url = {
+                    zxlUrl:"http://192.168.50.147/",
+                    fsdUrl:"http://localhost:8089/",
+                    online:"http://121.196.193.96/"
+                };
+            });
+		</script>
+	</body>
+</html>

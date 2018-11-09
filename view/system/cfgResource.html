@@ -1,0 +1,130 @@
+<div class="tableToolbar">
+    <div class="coll-md-9" id="addInput">
+        <!--<div class="coll-md-2">-->
+            <!--<input type="text" class='search' placeholder="名称" ng-model="cfgResourceSearchEntity.name">-->
+        <!--</div>-->
+        <div class="coll-md-1">
+            <!--<input type="button" class="small-icon search2-icon" value="搜索" ng-click="search()">-->
+            <!--<input type="button" class="small-icon search2" value="搜索">-->
+            <input type="button" class="small-icon reset-icon" reset-icon value="重置" ng-click="reset()">
+            <input type="button" class="small-icon reset" value="重置">
+        </div>
+    </div>
+    <div class="coll-md-1">
+        <input type="button" class="bttn pos-right"  ng-click="addFileTypeModal()" value="新建">
+    </div>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>名称</th>
+        <th>至少上传文件数</th>
+        <th>最大上传文件数</th>
+        <th>单个文件最大上传字节数</th>
+        <th>类型</th>
+        <th>添加时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in cfgResourceList">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.minimum}}</td>
+        <td>{{item.maximum}}</td>
+        <td>{{item.cacheSize}}{{item.cacheUnit}}</td>
+        <td>{{item.type}}</td>
+        <td>{{item.created|timeFilter}}</td>
+        <td>
+            <a ng-click="update(item)">编辑</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div style="width:100%;display:flex;align-content: center;justify-content:center;" ng-show="bigTotalItems > defaultPageSize">
+    <uib-pagination first-text="首页" last-text="末页" previous-text="上一页" next-text="下一页" total-items="bigTotalItems" ng-model="page" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true"  ng-change="changePages()"></uib-pagination>
+</div>
+
+<!--新建弹窗-->
+<modal title="编辑" visible="fileTypeModal">
+    <form class="form-horizontal" role="form" name="myForm" ng-submit="submit(myForm.$valid)">
+        <div class="form-body">
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">资源编号<strong class="error" ng-if="myForm.id.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input required type="number" class="form-control" name="id" ng-model="fileType.id">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">资源类型<strong class="error" ng-if="myForm.type.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input required type="number" class="form-control" name="type" ng-model="fileType.type">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">名称<strong class="error" ng-if="myForm.name.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input required type="text" class="form-control" name="name" ng-model="fileType.name">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">至少上传文件数<strong class="error" ng-if="myForm.minimum.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" ng-model="fileType.minimum" name="minimum" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">最多上传文件数<strong class="error" ng-if="myForm.maximum.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" ng-model="fileType.maximum" name="maximum" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">单个文件最大上传字节数<strong class="error" ng-if="myForm.cacheSize.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input type="number" class="form-control" ng-model="fileType.cacheSize" name="cacheSize" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">字节数单位<strong class="error" ng-if="myForm.cacheUnit.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <select class="form-control" name="cacheUnit" required ng-model="fileType.cacheUnit" >
+                                <option value="B">B</option>
+                                <option value="KB">KB</option>
+                                <option value="MB">MB</option>
+                                <option value="GB">GB</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-6">存放目录<strong class="error" ng-if="myForm.directory.$invalid">&nbsp;(必填)</strong></label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" ng-model="fileType.directory" name="directory" required/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttonArea col-md-12" style="border:none">
+                    <button type="submit" class="btn blue" ng-disabled="myForm.$invalid">提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</modal>

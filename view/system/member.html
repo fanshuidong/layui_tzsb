@@ -1,0 +1,118 @@
+<div class="tableToolbar">
+    <div class="coll-md-8" id="addInput">
+        <div class="coll-md-2">
+            <select class='form-control' data-ng-model="memberSearchEntity.sale">
+                <option selected disabled hidden value="">出售状态选择</option>
+                <option value="0">下架</option>
+                <option value="1">出售</option>
+            </select>
+        </div>
+        <div class="coll-md-2">
+            <input type="button" class="small-icon search2-icon" value="搜索" ng-click="search()">
+            <input type="button" class="small-icon search2" value="搜索">
+            <input type="button" class="small-icon reset-icon" reset-icon value="重置" ng-click="query(true)">
+            <input type="button" class="small-icon reset" value="重置">
+        </div>
+    </div>
+    <div class="coll-md-2">
+        <input type="button" class="bttn pos-right"  ng-click="add()" value="新建">
+    </div>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>名称</th>
+        <th>价格</th>
+        <th>购买次数限制</th>
+        <th>状态</th>
+        <th>过期时间</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in orderParams">
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.countLimit}}</td>
+        <td ng-bind-html="item.sale | enumFilter:'memberState'">{{item.state?'出售':'下架'}}</td>
+        <td>{{item.expiry}}{{item.timeUnit | enumFilter:'timeUnit'}}</td>
+        <td>{{item.created | timeFilter}}</td>
+        <td>
+            <a ng-click="update(item)">编辑</a>
+            <!--<a ng-click="delete(item.id)">删除</a>-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div style="width:100%;display:flex;align-content: center;justify-content:center;" ng-show="bigTotalItems > defaultPageSize">
+    <uib-pagination first-text="首页" last-text="末页" previous-text="上一页" next-text="下一页" total-items="bigTotalItems" ng-model="page" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true"  ng-change="changePages()"></uib-pagination>
+</div>
+<modal title="编辑" visible="memberModal">
+    <form action="#" class="form-horizontal" role="form" name="memberForm">
+        <div class="form-body">
+            <div class="scrollArea">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">名称</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="member.name" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">价格</label>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control" ng-model="member.price" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">状态</label>
+                            <div class="col-md-8">
+                                <select class="form-control" ng-model="member.sale" required>
+                                    <option value="true">出售</option>
+                                    <option value="false">下架</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">过期时间</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="member.expiry" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">过期时间单位</label>
+                            <div class="col-md-8">
+                                <select class="form-control" ng-model="member.timeUnit" required>
+                                    <option data-ng-repeat="item in timeUnit" value="{{item.value}}">{{item.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">购买次数限制</label>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control" ng-model="member.countLimit" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttonArea col-md-12">
+            <button type="button" class="btn blue" ng-disabled="memberForm.$invalid" data-ng-click="submitMember(memberForm.$valid)">提交</button>
+        </div>
+    </form>
+</modal>

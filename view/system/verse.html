@@ -1,0 +1,73 @@
+<div class="tableToolbar">
+    <div class="coll-md-8" id="addInput">
+        <div class="coll-md-2">
+            <input class="search" data-ng-model="verseSearchEntity.content" placeholder="请输入内容">
+        </div>
+        <div class="coll-md-2">
+            <input type="button" class="small-icon search2-icon" value="搜索" ng-click="search()">
+            <input type="button" class="small-icon search2" value="搜索">
+            <input type="button" class="small-icon reset-icon" reset-icon value="重置" ng-click="query(true)">
+            <input type="button" class="small-icon reset" value="重置">
+        </div>
+    </div>
+    <div class="coll-md-2">
+        <input type="button" class="bttn pos-right"  ng-click="add()" value="新建">
+    </div>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>编号</th>
+        <th>描述一</th>
+        <th>描述二</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in orderParams">
+        <td>{{item.id}}</td>
+        <td>{{item.content1}}</td>
+        <td>{{item.content2}}</td>
+        <td>{{item.created | timeFilter}}</td>
+        <td>
+            <a ng-click="update(item)">编辑</a>
+            <a ng-click="delete(item.id)">删除</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div style="width:100%;display:flex;align-content: center;justify-content:center;" ng-show="bigTotalItems > defaultPageSize">
+    <uib-pagination first-text="首页" last-text="末页" previous-text="上一页" next-text="下一页" total-items="bigTotalItems" ng-model="page" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true"  ng-change="changePages()"></uib-pagination>
+</div>
+<modal title="编辑" visible="verseModal">
+    <form action="#" class="form-horizontal" role="form" name="verseForm">
+        <div class="form-body">
+            <div class="scrollArea">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label col-md-4">日历描述一:</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" maxlength="14" data-ng-model="verse.content1"
+                                          placeholder="最多输入14个字" rows="2" cols="14" required>
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">日历描述二:</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" maxlength="11" data-ng-model="verse.content2"
+                                          placeholder="最多输入11个字" rows="2" cols="14" required>
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttonArea col-md-12">
+            <button type="button" class="btn blue" ng-disabled="verseForm.$invalid" data-ng-click="submitVerse(verseForm.$valid)">提交</button>
+        </div>
+    </form>
+</modal>

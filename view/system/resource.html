@@ -1,0 +1,143 @@
+
+<div class="box">
+    <div id="menuContent" class="menuContent" style="width:20%">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+    <div style="width: 80%;display: none" id="resource">
+        <form action="" name="myForm" class="form-horizontal">
+            <div class="form-body">
+               <div class="row">
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label  class="control-label col-md-4">栏目编号:</label>
+                           <div class="col-md-8">
+                               <input type="text" class="form-control" name="id" id="id" readonly required/>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label  class="control-label col-md-4">栏目名称:</label>
+                           <div class="col-md-8">
+                               <input type="text" class="form-control" name="name" id="name" required/>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label  class="control-label col-md-4">父栏目编号:</label>
+                           <div class="col-md-8">
+                               <input type="text" class="form-control" name="parent" id="parent" required/>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label  class="control-label col-md-4">栏目路径:</label>
+                           <div class="col-md-8">
+                               <input type="text" class="form-control" name="url" id="url" required/>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label  class="control-label col-md-4">序号:</label>
+                           <div class="col-md-8">
+                               <input type="text" class="form-control" name="priority" id="priority" required/>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <div class="form-group">
+                           <label  class="control-label col-md-4">栏目样式:</label>
+                           <div class="col-md-8">
+                               <input type="text" class="form-control" name="css" id="css"/>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="buttonArea col-md-12">
+                       <button type="button" class="btn blue" data-ng-click="resourceModify()">修改</button>
+                   </div>
+               </div>
+            </div>
+        </form>
+    </div>
+    <div class="buttonArea col-md-12">
+        <button type="button" class="btn blue" data-ng-click="resourceAdd()">新增栏目</button>
+    </div>
+</div>
+<div style="margin-top: 30px;display: none;text-align: center" id="apiAuth">
+    <div class="row">
+        <div class="col-xs-10">
+            <h4>{{authResource}} 权限分配</h4>
+            <div class="col-xs-5">
+                <select name="from[]" id="multiselect1" class="form-control" size="8" multiple="multiple">
+                    <option  ng-repeat="item in leftApiList" value="{{item.id}}">{{item.desc}}</option>
+                </select>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" id="multiselect1_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                <button type="button" id="multiselect1_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                <button type="button" id="multiselect1_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                <button type="button" id="multiselect1_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+            </div>
+            <div class="col-xs-5">
+                <select name="to[]" id="multiselect1_to" class="form-control" size="8" multiple="multiple">
+                    <option  ng-repeat="item in rightApiList" value="{{item.id}}">{{item.desc}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<modal title="添加栏目" visible="resourceAddModal">
+    <form action="" name="addForm" class="form-horizontal">
+        <div class="form-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="control-label col-md-4">栏目名称:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="add.name" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="control-label col-md-4">父栏目编号:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="add.parent" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="control-label col-md-4">栏目路径:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="add.url" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="control-label col-md-4">序号:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="add.priority" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="control-label col-md-4">栏目样式:</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" data-ng-model="add.css"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttonArea col-md-12">
+                <button type="button" class="btn blue" ng-disabled="addForm.$invalid" data-ng-click="resourceAddSubmit(addForm.$valid)">提交</button>
+            </div>
+        </div>
+    </form>
+</modal>
+
